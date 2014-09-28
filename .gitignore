@@ -1,4 +1,6 @@
 node_modules/
+lib/connections.json
+lib/sonicConfig.json
 temp
 *.log
 .idea
