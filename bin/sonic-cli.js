@@ -416,20 +416,20 @@ if (logged) {
                                 console.log('  You don\'t have buckets.'.red.bold + '\n\n  Create a new bucket. \n\n  $ sonic buckets:create'.bold.white);
                                 process.exit();
                             }
-                            var prompts = [{
+                            var promptsBucket = [{
                                 type: 'list',
                                 message: 'Choose a bucket',
                                 name: 'bucket',
                                 choices: list
                             }];
                             //Ask
-                            api.prompt(prompts, function(answersBucket) {
+                            api.prompt(promptsBucket, function(answersBucket) {
                                 api.listAssetsByBucket(answersBucket.bucket, function(list) {
                                     if (list.length < 1) {
                                         console.log('  You don\'t have assets.'.red.bold + '\n\n  Create a new asset. \n\n  $ sonic assets:upload <file>'.bold.white);
                                         process.exit();
                                     }
-                                    var prompts = [{
+                                    var promptsAsset = [{
                                         type: 'list',
                                         message: 'Choose a asset',
                                         name: 'asset',
@@ -440,7 +440,7 @@ if (logged) {
                                         message: 'Are you sure you want to delete this asset?'
                                     }];
                                     //Ask
-                                    api.prompt(prompts, function(answers) {
+                                    api.prompt(promptsAsset, function(answers) {
                                         if (answers.confirm) {
                                             api.deleteAsset(answersBucket.bucket, answers.asset, answersOpt.action);
                                         }
@@ -451,11 +451,128 @@ if (logged) {
                         break;
 
                     case 'version':
-
+                        api.listBuckets(function(list) {
+                            if (list.length < 1) {
+                                console.log('  You don\'t have buckets.'.red.bold + '\n\n  Create a new bucket. \n\n  $ sonic buckets:create'.bold.white);
+                                process.exit();
+                            }
+                            var promptsBucket = [{
+                                type: 'list',
+                                message: 'Choose a bucket',
+                                name: 'bucket',
+                                choices: list
+                            }];
+                            //Ask
+                            api.prompt(promptsBucket, function(answersBucket) {
+                                api.listAssetsByBucket(answersBucket.bucket, function(list) {
+                                    if (list.length < 1) {
+                                        console.log('  You don\'t have assets.'.red.bold + '\n\n  Create a new asset. \n\n  $ sonic assets:upload <file>'.bold.white);
+                                        process.exit();
+                                    }
+                                    var promptsAsset = [{
+                                        type: 'list',
+                                        message: 'Choose a asset',
+                                        name: 'asset',
+                                        choices: list
+                                    }];
+                                    //Ask
+                                    api.prompt(promptsAsset, function(answersAsset) {
+                                        api.listVersions(answersBucket.bucket, answersAsset.asset, function(list) {
+                                            if (list.length < 1) {
+                                                console.log('  You don\'t have versions.'.red.bold + '\n\n  Create a new asset. \n\n  $ sonic assets:upload <file>'.bold.white);
+                                                process.exit();
+                                            }
+                                            var prompts = [{
+                                                type: 'list',
+                                                message: 'Choose a version',
+                                                name: 'version',
+                                                choices: list
+                                            }, {
+                                                type: 'confirm',
+                                                name: 'confirm',
+                                                message: 'Are you sure you want to delete this version?'
+                                            }];
+                                            //Ask
+                                            api.prompt(prompts, function(answers) {
+                                                if (answers.confirm) {
+                                                    api.deleteAsset(answersBucket.bucket, answers.version, answersOpt.action, answersAsset.asset);
+                                                }
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
                         break;
 
                     case 'file':
-
+                        api.listBuckets(function(list) {
+                            if (list.length < 1) {
+                                console.log('  You don\'t have buckets.'.red.bold + '\n\n  Create a new bucket. \n\n  $ sonic buckets:create'.bold.white);
+                                process.exit();
+                            }
+                            var promptsBucket = [{
+                                type: 'list',
+                                message: 'Choose a bucket',
+                                name: 'bucket',
+                                choices: list
+                            }];
+                            //Ask
+                            api.prompt(promptsBucket, function(answersBucket) {
+                                api.listAssetsByBucket(answersBucket.bucket, function(list) {
+                                    if (list.length < 1) {
+                                        console.log('  You don\'t have assets.'.red.bold + '\n\n  Create a new asset. \n\n  $ sonic assets:upload <file>'.bold.white);
+                                        process.exit();
+                                    }
+                                    var promptsAsset = [{
+                                        type: 'list',
+                                        message: 'Choose a asset',
+                                        name: 'asset',
+                                        choices: list
+                                    }];
+                                    //Ask
+                                    api.prompt(promptsAsset, function(answersAsset) {
+                                        api.listVersions(answersBucket.bucket, answersAsset.asset, function(list) {
+                                            if (list.length < 1) {
+                                                console.log('  You don\'t have versions.'.red.bold + '\n\n  Create a new asset. \n\n  $ sonic assets:upload <file>'.bold.white);
+                                                process.exit();
+                                            }
+                                            var promptsVersion = [{
+                                                type: 'list',
+                                                message: 'Choose a version',
+                                                name: 'version',
+                                                choices: list
+                                            }];
+                                            //Ask
+                                            api.prompt(promptsVersion, function(answersVersion) {
+                                                api.listAssets(answersBucket.bucket, answersAsset.asset, answersVersion.version, function(list) {
+                                                    if (list.length < 1) {
+                                                        console.log('  You don\'t have files.'.red.bold + '\n\n  Create a new asset. \n\n  $ sonic assets:upload <file>'.bold.white);
+                                                        process.exit();
+                                                    }
+                                                    var prompts = [{
+                                                        type: 'list',
+                                                        message: 'Choose a file',
+                                                        name: 'file',
+                                                        choices: list
+                                                    }, {
+                                                        type: 'confirm',
+                                                        name: 'confirm',
+                                                        message: 'Are you sure you want to delete this file?'
+                                                    }];
+                                                    //Ask
+                                                    api.prompt(prompts, function(answers) {
+                                                        if (answers.confirm) {
+                                                            api.deleteAsset(answersBucket.bucket, answers.file, answersOpt.action);
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
                         break;
                 }
             });
