@@ -1,0 +1,10 @@
+{
+    "name": "Sonic CLI",
+    "description": "Sonic CLI: A CLI tool for manage Sonic (CDN)",
+    "version": "0.1.0",
+    "url": "https://github.com/enytc/sonic-cli",
+    "options": {
+        "outdir": "./docs",
+        "paths": "./lib"
+    }
+}
