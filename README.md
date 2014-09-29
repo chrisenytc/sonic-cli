@@ -14,54 +14,264 @@ $ npm install -g sonic-cli
 Example:
 
 ```javascript
-var Api = require('sonic-cli');
+var Sonic = require('sonic-cli');
 //Create new instance of Sonic CLI
-var api = new Api('access_token');
+var api = new Sonic('http://localhost:8081', 'access_token');
+```
+
+## How to use
+
+Example of use the Sonic CLI
+
+```bash
+$ sonic connect
 ```
 
 ## Documentation
 
 
-#### .signup(name, email, password)
+#### .connect(url)
 
-**Parameter**: `name`
+**Parameter**: `url`
 **Type**: `String`
-**Example**: `myname`
+**Example**: `http://localhost:8081`
 
 
-**Parameter**: `email`
-**Type**: `String`
-**Example**: `example@example.com`
-
-
-**Parameter**: `password`
-**Type**: `String`
-**Example**: `123456test`
-
-
-The 'signup' method is responsible for create accounts
+The 'connect' method is responsible for create connections
 
 How to use this method
 
 ```javascript
 
-api.signup('myname', 'email', '123456test');
+api.connect('http://localhost:8081');
 ```
 
-#### .status(pureJson)
+#### .login(accessToken, username, password)
+
+**Parameter**: `accessToken`
+**Type**: `String`
+**Example**: `157953`
+
+**Parameter**: `username`
+**Type**: `String`
+**Example**: `chrisenytc`
+
+**Parameter**: `password`
+**Type**: `String`
+**Example**: `12345678`
+
+
+The 'login' method is responsible for login in accounts
+
+How to use this method
+
+```javascript
+
+//Login with access token
+api.login('12345678');
+
+//Login with username and password
+api.login(null, 'chrisenytc', '12345678');
+```
+
+#### .users(pureJson)
 
 **Parameter**: `pureJson`
 **Type**: `Boolean`
 **Example**: `true`
 
 
-The 'status' method is responsible for showing the status of api
+The 'users' method is responsible for show users
 
 How to use this method
 
 ```javascript
 
-api.status(true);
+api.users(true);
+```
+
+#### .createUser(username, password)
+
+**Parameter**: `username`
+**Type**: `String`
+**Example**: `chrisenytc`
+
+**Parameter**: `password`
+**Type**: `String`
+**Example**: `12345678`
+
+
+The 'createUser' method is responsible for create new users
+
+How to use this method
+
+```javascript
+
+api.createUser('chrisenytc', '12345678');
+```
+
+#### .updateUser(username, password)
+
+**Parameter**: `username`
+**Type**: `String`
+**Example**: `chrisenytc`
+
+**Parameter**: `password`
+**Type**: `String`
+**Example**: `12345678`
+
+
+The 'updateUser' method is responsible for update users
+
+How to use this method
+
+```javascript
+
+api.updateUser('chrisenytc', '12345678');
+```
+
+#### .deleteUser(id)
+
+**Parameter**: `id`
+**Type**: `String`
+**Example**: `id`
+
+
+The 'deleteUser' method is responsible for delete users
+
+How to use this method
+
+```javascript
+
+api.deleteUser('id');
+```
+
+#### .buckets(pureJson)
+
+**Parameter**: `pureJson`
+**Type**: `Boolean`
+**Example**: `true`
+
+
+The 'buckets' method is responsible for show all buckets
+
+How to use this method
+
+```javascript
+
+api.buckets(true);
+```
+
+#### .createBucket(name)
+
+**Parameter**: `name`
+**Type**: `String`
+**Example**: `bella`
+
+
+The 'createBucket' method is responsible for create buckets
+
+How to use this method
+
+```javascript
+
+api.createBucket('bella');
+```
+
+#### .deleteBucket(id)
+
+**Parameter**: `id`
+**Type**: `String`
+**Example**: `id`
+
+
+The 'deleteBucket' method is responsible for delete buckets
+
+How to use this method
+
+```javascript
+
+api.deleteBucket('id');
+```
+
+#### .assets(pureJson)
+
+**Parameter**: `pureJson`
+**Type**: `Boolean`
+**Example**: `true`
+
+
+The 'assets' method is responsible for show all assets
+
+How to use this method
+
+```javascript
+
+api.assets(true);
+```
+
+#### .createAsset(name, version, bucketId, filePath)
+
+**Parameter**: `name`
+**Type**: `String`
+**Example**: `bella`
+
+**Parameter**: `version`
+**Type**: `String`
+**Example**: `0.1.0`
+
+**Parameter**: `bucketId`
+**Type**: `String`
+**Example**: `id`
+
+**Parameter**: `filePath`
+**Type**: `String`
+**Example**: `/home/chrisenytc/Labs/Node/sonic-cli/lib/sonic-cli.js`
+
+
+The 'createAsset' method is responsible for create assets
+
+How to use this method
+
+```javascript
+
+api.createAsset('bella', '0.1.0', 'id', '/home/chrisenytc/Labs/Node/sonic-cli/lib/sonic-cli.js');
+```
+
+#### .deleteAsset(bucketId, id, option, [name,])
+
+**Parameter**: `bucketId`
+**Type**: `String`
+**Example**: `id`
+
+**Parameter**: `id`
+**Type**: `String`
+**Example**: `id`
+
+**Parameter**: `option`
+**Type**: `String`
+**Options**: `asset, version or file`
+**Example**: `asset`
+
+**Parameter**: `name`
+**Type**: `String`
+**Example**: `belle`
+
+
+The 'deleteAsset' method is responsible for delete assets
+
+How to use this method
+
+```javascript
+
+//Delete asset
+api.deleteAsset('bucketId', 'belle', 'asset');
+
+//Delete version
+api.deleteAsset('bucketId', '0.1.0', 'version', 'belle');
+
+//Delete file
+api.deleteAsset('bucketId', 'id', 'file');
 ```
 
 
