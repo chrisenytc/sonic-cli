@@ -12,13 +12,13 @@ var chai = require('chai');
 chai.expect();
 chai.should();
 
-var Api = require('../lib/sonic-cli.js');
-var api = new Api('access_token');
+var Sonic = require('../lib/sonic-cli.js');
+var api = new Sonic('access_token');
 
 describe('sonic-cli module', function() {
     describe('#constructor()', function() {
         it('should be a function', function() {
-            Api.should.be.a("function");
+            Sonic.should.be.a("function");
         });
     });
     describe('#instance()', function() {
